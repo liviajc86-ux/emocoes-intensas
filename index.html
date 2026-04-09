@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Emoções Intensas · Material Terapêutico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════ */
+:root {
+  --c-teal:      #1E7A82;
+  --c-teal-d:    #155962;
+  --c-teal-l:    #C8E8EB;
+  --c-teal-xl:   #EBF6F7;
+  --c-sage:      #4A9E8E;
+  --c-amber:     #D97B3A;
+  --c-amber-l:   #FAEBD7;
+  --c-cream:     #F8F3EC;
+  --c-ink:       #1A2628;
+  --c-mid:       #4A6568;
+  --c-muted:     #7D9396;
+  --c-line:      #D4E8EA;
+  --c-white:     #FFFFFF;
+  --c-green:     #3DAA7A;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+  --sh:   0 2px 20px rgba(30,122,130,.10);
+  --sh-l: 0 8px 40px rgba(30,122,130,.16);
+  --ff-display: 'Fraunces', Georgia, serif;
+  --ff-body:    'Instrument Sans', system-ui, sans-serif;
+  --trans: all .22s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--c-cream);
+  color: var(--c-ink);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════
+   WELCOME OVERLAY
+═══════════════════════════════════════════════ */
+#welcome {
+  position: fixed; inset: 0; z-index: 1000;
+  background: linear-gradient(160deg, var(--c-teal-d) 0%, var(--c-teal) 55%, var(--c-sage) 100%);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+  animation: fadeIn .6s ease;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.welcome-inner {
+  max-width: 560px; margin: auto;
+  padding: 40px 24px 48px;
+  display: flex; flex-direction: column; gap: 0;
+}
+
+.w-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 99px; padding: 5px 14px;
+  color: rgba(255,255,255,.9); font-size: 12px; font-weight: 500;
+  margin-bottom: 24px; align-self: flex-start;
+  backdrop-filter: blur(8px);
+}
+.w-badge::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: #6EE7B7; flex-shrink: 0;
+}
+
+.w-title {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 700; color: #fff;
+  line-height: 1.18; margin-bottom: 10px;
+}
+.w-title em { font-style: italic; font-weight: 300; }
+
+.w-sub {
+  color: rgba(255,255,255,.75); font-size: 14px; line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+/* Info cards */
+.w-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.w-card {
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: var(--r-md); padding: 14px 16px;
+  backdrop-filter: blur(10px);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.w-card-icon {
+  font-size: 20px; flex-shrink: 0; margin-top: 1px;
+  width: 32px; text-align: center;
+}
+.w-card-body { flex: 1; }
+.w-card-body strong {
+  display: block; color: #fff; font-size: 13px;
+  font-weight: 600; margin-bottom: 3px;
+}
+.w-card-body p { color: rgba(255,255,255,.75); font-size: 12.5px; line-height: 1.6; }
+
+/* Code recovery in welcome */
+.w-recovery {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--r-md); padding: 16px;
+  margin-bottom: 20px;
+}
+.w-recovery p { color: rgba(255,255,255,.8); font-size: 12.5px; margin-bottom: 10px; line-height:1.55; }
+.w-recovery-row { display: flex; gap: 8px; }
+.w-recovery input {
+  flex: 1; padding: 11px 14px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  border-radius: var(--r-sm); color: #fff; font-size: 15px; font-weight: 600;
+  letter-spacing: 3px; text-align: center;
+  font-family: var(--ff-body); outline: none;
+}
+.w-recovery input::placeholder { color: rgba(255,255,255,.4); letter-spacing: 1px; font-size:13px; }
+.w-recovery input:focus { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.2); }
+.w-recovery-btn {
+  padding: 11px 16px; background: rgba(255,255,255,.2);
+  border: 1px solid rgba(255,255,255,.3); border-radius: var(--r-sm);
+  color: #fff; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: var(--trans); white-space: nowrap;
+  font-family: var(--ff-body);
+}
+.w-recovery-btn:hover { background: rgba(255,255,255,.3); }
+.w-recovery-msg { font-size: 12px; margin-top: 8px; min-height: 16px; }
+.w-recovery-msg.ok  { color: #6EE7B7; }
+.w-recovery-msg.err { color: #FCA5A5; }
+
+.w-confirm-btn {
+  width: 100%; padding: 17px;
+  background: #fff; color: var(--c-teal-d);
+  border: none; border-radius: var(--r-lg);
+  font-family: var(--ff-body); font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: var(--trans);
+  box-shadow: 0 4px 24px rgba(0,0,0,.18);
+  letter-spacing: .01em;
+}
+.w-confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.22); }
+.w-confirm-btn:active { transform: translateY(0); }
+
+.w-fine-print {
+  text-align: center; color: rgba(255,255,255,.45);
+  font-size: 11px; margin-top: 16px; line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════
+   MAIN APP
+═══════════════════════════════════════════════ */
+#app { display: none; }
+#app.visible { display: block; animation: slideUp .5s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── TOP BAR ── */
+.topbar {
+  background: linear-gradient(135deg, var(--c-teal-d), var(--c-teal));
+  padding: 20px 20px 32px;
+  position: relative; overflow: hidden;
+}
+.topbar::after {
+  content:''; position:absolute; bottom:-1px; left:0; right:0; height:24px;
+  background: var(--c-cream);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+.topbar-inner { max-width: 700px; margin: 0 auto; }
+.topbar-row { display: flex; align-items: center; justify-content: space-between; gap:12px; }
+.topbar h1 {
+  font-family: var(--ff-display); font-size: clamp(18px, 4vw, 26px);
+  font-weight: 600; color: #fff; line-height: 1.2;
+}
+.topbar h1 em { font-style: italic; font-weight: 300; }
+
+.save-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 99px; padding: 5px 12px; flex-shrink: 0;
+  backdrop-filter: blur(6px);
+}
+.save-pill .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #6EE7B7; transition: background .3s;
+}
+.save-pill .dot.saving { background: #FCD34D; animation: blink .7s infinite; }
+.save-pill span { font-size: 11px; color: rgba(255,255,255,.85); white-space: nowrap; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.35} }
+
+/* progress */
+.progress-bar-wrap {
+  background: rgba(255,255,255,.2); border-radius: 99px;
+  height: 5px; margin-top: 14px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: #fff; border-radius: 99px;
+  transition: width .5s ease;
+}
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(255,255,255,.65); margin-top: 5px;
+}
+
+/* ── LAYOUT ── */
+.main { max-width: 700px; margin: 0 auto; padding: 12px 16px 80px; }
+
+/* ── SECTION ── */
+.section {
+  background: var(--c-white); border-radius: var(--r-lg);
+  box-shadow: var(--sh); margin-top: 20px;
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.section:focus-within { box-shadow: var(--sh-l); }
+
+.section-hd {
+  padding: 18px 20px;
+  border-bottom: 1.5px solid var(--c-teal-xl);
+  display: flex; gap: 13px; align-items: flex-start;
+}
+.section-hd.amber { border-bottom-color: #F5DCC8; }
+.sec-num {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: var(--c-teal); color: #fff;
+  font-family: var(--ff-display); font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.sec-num.amber { background: var(--c-amber); }
+.sec-num.final { background: var(--c-sage); }
+.section-hd h2 {
+  font-family: var(--ff-display); font-size: 16px; font-weight: 600;
+  color: var(--c-teal-d); line-height: 1.35;
+}
+.section-hd.amber h2 { color: #9A4B1A; }
+
+.section-bd { padding: 20px; }
+
+/* ── TEXT ── */
+.body-text { font-size: 13.5px; line-height: 1.72; color: var(--c-mid); margin-bottom: 16px; }
+.label-sm {
+  font-size: 11.5px; font-weight: 600; color: var(--c-muted);
+  text-transform: uppercase; letter-spacing: .055em;
+  display: block; margin-bottom: 5px; margin-top: 16px;
+}
+.label-sm:first-child { margin-top: 0; }
+
+/* ── HIGHLIGHT ── */
+.hl {
+  border-radius: var(--r-sm); padding: 13px 15px 13px 18px;
+  border-left: 3.5px solid var(--c-teal); background: var(--c-teal-xl);
+  margin-bottom: 16px;
+}
+.hl.amber { border-color: var(--c-amber); background: var(--c-amber-l); }
+.hl strong { display: block; font-size: 13px; color: var(--c-teal-d); margin-bottom: 4px; }
+.hl.amber strong { color: var(--c-amber); }
+.hl p { font-size: 13px; line-height: 1.65; color: var(--c-mid); }
+
+/* ── STEPS ── */
+.steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.step {
+  display: flex; gap: 11px; align-items: flex-start;
+  background: var(--c-teal-xl); border-radius: var(--r-sm); padding: 11px 13px;
+}
+.step-n {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: var(--c-teal); color: #fff;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.step p { font-size: 13px; line-height: 1.62; color: var(--c-mid); }
+.step b { color: var(--c-teal-d); }
+
+/* ── TABLE ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 14px; border-radius: var(--r-sm); overflow:hidden; }
+.tbl th {
+  background: var(--c-teal-d); color: #fff;
+  padding: 9px 11px; text-align: left; font-weight: 600; font-size:12px;
+}
+.tbl td { padding: 8px 11px; border-bottom: 1px solid var(--c-line); vertical-align:top; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:nth-child(even) td { background: var(--c-teal-xl); }
+.tbl .lbl { font-weight: 600; color: var(--c-teal); font-size:12px; }
+.tbl.amber th { background: var(--c-amber); }
+.tbl.amber tr:nth-child(even) td { background: var(--c-amber-l); }
+.tbl.amber .lbl { color: #9A4B1A; }
+
+/* ── INPUTS ── */
+textarea, input[type=text], input[type=number] {
+  width: 100%; font-family: var(--ff-body);
+  font-size: 14px; line-height: 1.6;
+  border: 1.5px solid var(--c-line);
+  border-radius: var(--r-sm); padding: 11px 13px;
+  background: #FAFEFE; color: var(--c-ink);
+  transition: var(--trans); outline: none; resize: vertical;
+}
+textarea { min-height: 72px; }
+textarea:focus, input:focus {
+  border-color: var(--c-teal); background: #fff;
+  box-shadow: 0 0 0 3px rgba(30,122,130,.10);
+}
+
+/* ── TRACKER ── */
+.tracker-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px;
+}
+.tracker-cell .tc-lbl {
+  font-size: 11px; font-weight: 600; color: var(--c-muted);
+  text-align: center; margin-bottom: 4px;
+}
+.tracker-cell input[type=number] {
+  text-align: center; padding: 10px 4px;
+  font-size: 17px; font-weight: 700; color: var(--c-teal);
+  background: var(--c-teal-xl);
+}
+
+/* ── ABC ── */
+.abc-stack { border-radius: var(--r-sm); overflow: hidden; margin-bottom: 16px; }
+.abc-row { display: flex; align-items: stretch; }
+.abc-letter {
+  width: 42px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-display); font-size: 22px; font-weight: 700; color: #fff;
+}
+.abc-row:nth-child(1) .abc-letter { background: var(--c-teal); }
+.abc-row:nth-child(2) .abc-letter { background: var(--c-teal-d); }
+.abc-row:nth-child(3) .abc-letter { background: var(--c-sage); }
+.abc-body { flex: 1; padding: 11px 14px; }
+.abc-row:nth-child(1) .abc-body { background: rgba(30,122,130,.06); }
+.abc-row:nth-child(2) .abc-body { background: rgba(21,89,98,.06); }
+.abc-row:nth-child(3) .abc-body { background: rgba(74,158,142,.06); }
+.abc-body strong { display: block; font-size: 12.5px; color: var(--c-teal-d); margin-bottom: 2px; }
+.abc-body p { font-size: 12px; color: var(--c-muted); line-height: 1.5; }
+
+/* ── WEEKLY ── */
+.weekly-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.weekly-tbl { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 520px; }
+.weekly-tbl th {
+  background: var(--c-teal-d); color: #fff; padding: 8px 6px;
+  text-align: center; font-size: 11.5px;
+}
+.weekly-tbl th:first-child { text-align: left; padding-left: 12px; width: 46%; }
+.weekly-tbl td { padding: 7px 6px; border-bottom: 1px solid var(--c-line); text-align: center; }
+.weekly-tbl td:first-child { text-align: left; padding-left: 12px; font-size: 12px; line-height: 1.4; }
+.weekly-tbl tr:nth-child(even) td { background: var(--c-teal-xl); }
+.wchk { width: 19px; height: 19px; accent-color: var(--c-teal); cursor: pointer; }
+
+/* ── CODE PANEL ── */
+.code-panel {
+  background: linear-gradient(135deg, var(--c-teal-d), var(--c-teal));
+  border-radius: var(--r-lg); padding: 24px 20px;
+  margin-top: 20px; text-align: center;
+  box-shadow: var(--sh-l);
+}
+.code-panel h3 {
+  font-family: var(--ff-display); color: #fff;
+  font-size: 17px; margin-bottom: 6px;
+}
+.code-panel .sub { color: rgba(255,255,255,.7); font-size: 12.5px; margin-bottom: 20px; line-height:1.55; }
+.code-display {
+  background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25);
+  border-radius: var(--r-md); padding: 18px 24px; margin-bottom: 16px;
+  display: inline-block; min-width: 200px;
+}
+.code-display .code-num {
+  font-size: 40px; font-weight: 700; color: #fff; letter-spacing: 8px;
+  font-family: var(--ff-display); display: block;
+}
+.code-display .code-hint { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 4px; }
+.code-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.c-btn {
+  padding: 11px 18px; border-radius: 99px;
+  font-family: var(--ff-body); font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; transition: var(--trans);
+  display: flex; align-items: center; gap: 6px;
+}
+.c-btn.white { background: #fff; color: var(--c-teal-d); }
+.c-btn.white:hover { background: var(--c-teal-xl); transform: translateY(-1px); }
+.c-btn.ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); }
+.c-btn.ghost:hover { background: rgba(255,255,255,.22); }
+.c-btn.wa { background: #25D366; color: #fff; }
+.c-btn.wa:hover { background: #1DBE5D; transform: translateY(-1px); }
+
+/* ── CLOSING ── */
+.closing {
+  background: linear-gradient(135deg, var(--c-teal-d), var(--c-teal));
+  border-radius: var(--r-lg); padding: 28px 22px;
+  margin-top: 20px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.closing::before {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:32px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='32'%3E%3Cpath d='M0 16 C15 4,30 4,45 16 C60 28,75 28,90 16 C105 4,120 4,120 16' fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3C/svg%3E") repeat-x bottom;
+  background-size: 120px 32px;
+}
+.closing h3 { font-family: var(--ff-display); color: #fff; font-size: 19px; margin-bottom: 12px; font-style:italic; }
+.closing p  { color: rgba(255,255,255,.8); font-size: 13.5px; line-height: 1.75; max-width: 480px; margin: 0 auto 12px; }
+.closing .quote { font-family: var(--ff-display); font-style: italic; color: rgba(255,255,255,.6); font-size: 13px; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(10px);
+  background: var(--c-ink); color: #fff;
+  padding: 10px 20px; border-radius: 99px;
+  font-size: 13px; font-weight: 500;
+  box-shadow: var(--sh-l); z-index: 999;
+  opacity: 0; transition: all .3s;
+  pointer-events: none; white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── DIVIDER ── */
+.div { height: 1.5px; background: var(--c-teal-l); border:none; margin: 16px 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .section-bd { padding: 16px; }
+  .code-display .code-num { font-size: 34px; letter-spacing: 5px; }
+  .c-btn { padding: 10px 14px; font-size: 12px; }
+}
+
+/* ── PRINT ── */
+@media print {
+  #welcome, .save-pill, .code-actions, #toast { display: none !important; }
+  body { background: #fff; }
+  .section { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     WELCOME SCREEN
+════════════════════════════════════════════ -->
+<div id="welcome">
+  <div class="welcome-inner">
+
+    <div class="w-badge">Material Terapêutico · Regulação Emocional</div>
+
+    <h1 class="w-title">Aprendendo a Lidar<br>com <em>Emoções Intensas</em></h1>
+    <p class="w-sub">Antes de começar, leia com calma as informações abaixo. Elas vão ajudar você a aproveitar melhor este material.</p>
+
+    <div class="w-cards">
+      <div class="w-card">
+        <div class="w-card-icon">⏱️</div>
+        <div class="w-card-body">
+          <strong>Tempo estimado: cerca de 20 minutos</strong>
+          <p>Você pode fazer em etapas — suas respostas ficam salvas automaticamente.</p>
+        </div>
+      </div>
+      <div class="w-card">
+        <div class="w-card-icon">🌿</div>
+        <div class="w-card-body">
+          <strong>Escolha um momento tranquilo</strong>
+          <p>Prefira um lugar silencioso, sem interrupções. Este material pede atenção e honestidade consigo mesmo(a).</p>
+        </div>
+      </div>
+      <div class="w-card">
+        <div class="w-card-icon">🔒</div>
+        <div class="w-card-body">
+          <strong>Suas respostas ficam só no seu dispositivo</strong>
+          <p>Nenhum dado é enviado para a internet. Tudo fica salvo neste navegador, neste aparelho. Nem o terapeuta acessa automaticamente — você decide o que compartilhar.</p>
+        </div>
+      </div>
+      <div class="w-card">
+        <div class="w-card-icon">🔢</div>
+        <div class="w-card-body">
+          <strong>Código de 6 dígitos — para você retomar neste aparelho</strong>
+          <p>Ao finalizar, você verá um código gerado a partir das suas respostas. Ele serve para <em>você</em> retomar o preenchimento neste mesmo aparelho e navegador em outro momento. O terapeuta acessa as respostas pelo arquivo ou texto exportado — não pelo código.</p>
+        </div>
+      </div>
+      <div class="w-card">
+        <div class="w-card-icon">📤</div>
+        <div class="w-card-body">
+          <strong>Como enviar as respostas ao terapeuta</strong>
+          <p>Ao finalizar, use "Exportar .txt" para baixar um arquivo com suas respostas, ou "Copiar respostas" para colar em qualquer mensagem. Envie ao terapeuta pelo canal que preferir.</p>
+        </div>
+      </div>
+      <div class="w-card">
+        <div class="w-card-icon">⚠️</div>
+        <div class="w-card-body">
+          <strong>Este material não substitui o acompanhamento profissional</strong>
+          <p>Ele é um apoio entre sessões. Em caso de crise ou pensamentos de autolesão, entre em contato com seu terapeuta ou ligue para o CVV: <strong>188</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recovery -->
+    <div class="w-recovery">
+      <p><strong style="color:#fff;">Já preencheu antes?</strong> Digite seu código de 6 dígitos para retomar de onde parou (somente funciona neste aparelho).</p>
+      <div class="w-recovery-row">
+        <input type="number" id="recoveryInput" placeholder="código de 6 dígitos" maxlength="6">
+        <button class="w-recovery-btn" onclick="tryRecover()">Recuperar</button>
+      </div>
+      <div class="w-recovery-msg" id="recoveryMsg"></div>
+    </div>
+
+    <button class="w-confirm-btn" onclick="enterApp()">
+      Li as instruções — Vamos começar ✓
+    </button>
+    <p class="w-fine-print">Ao continuar, você concorda que este material tem fins de apoio terapêutico<br>e não substitui avaliação ou tratamento profissional.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN APP
+════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row">
+        <h1>Emoções Intensas</h1>
+        <div class="save-pill">
+          <div class="dot" id="saveDot"></div>
+          <span id="saveLabel">Salvo</span>
+        </div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-label">
+        <span>Progresso</span>
+        <span id="progressPct">0% preenchido</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- ── SEÇÃO 1 ── -->
+    <div class="section">
+      <div class="section-hd">
+        <div class="sec-num">1</div>
+        <h2>Tomando Consciência das Emoções Sem Julgamento</h2>
+      </div>
+      <div class="section-bd">
+        <p class="body-text">Muitas vezes tentamos empurrar as emoções para longe. Mas quanto mais resistimos, mais elas crescem. Observar com gentileza já ajuda a diminuir o sofrimento.</p>
+        <div class="hl amber">
+          <strong>🌊 A Metáfora da Onda</strong>
+          <p>As emoções são como ondas do mar: chegam, crescem, atingem o pico e recuam naturalmente. Você não precisa lutar — apenas deixar passar.</p>
+        </div>
+        <p style="font-size:13px;font-weight:600;color:var(--c-teal-d);margin-bottom:10px;">Exercício de Visualização — siga os passos:</p>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><p>Feche os olhos, respire fundo e perceba <b>onde no corpo</b> você sente a emoção agora.</p></div>
+          <div class="step"><div class="step-n">2</div><p>Observe pensamentos de julgamento (ex: "eu não deveria sentir isso"). Imagine cada um como uma <b>folha flutuando num riacho</b> — veja-a passar.</p></div>
+          <div class="step"><div class="step-n">3</div><p>Se o pensamento insistir, coloque-o num <b>vagão de trem imaginário</b> e veja o trem partir. Volte à respiração.</p></div>
+        </div>
+        <label class="label-sm">Qual emoção você está sentindo agora (ou sentiu recentemente)?</label>
+        <input type="text" id="s1_emocao" placeholder="Ex: tristeza, ansiedade, raiva…" data-save>
+        <label class="label-sm">Onde no corpo você sente essa emoção?</label>
+        <input type="text" id="s1_corpo" placeholder="Ex: aperto no peito, nó no estômago…" data-save>
+        <label class="label-sm">Qual pensamento de julgamento apareceu? (o que você pode colocar no vagão?)</label>
+        <textarea id="s1_pensamento" placeholder="Ex: 'eu não deveria sentir isso', 'sou fraco por sentir assim'…" data-save></textarea>
+        <label class="label-sm">Como foi observar esse pensamento passar? O que você percebeu?</label>
+        <textarea id="s1_observacao" placeholder="Descreva livremente…" data-save></textarea>
+      </div>
+    </div>
+
+    <!-- ── SEÇÃO 2 ── -->
+    <div class="section">
+      <div class="section-hd">
+        <div class="sec-num">2</div>
+        <h2>Exposição Emocional — Ficando com o Sentimento</h2>
+      </div>
+      <div class="section-bd">
+        <p class="body-text">A exposição emocional ensina a <strong>ficar com a emoção</strong> até que ela perca a força — e ela sempre perde. Em vez de bloquear, observamos.</p>
+        <label class="label-sm">Nomeie a emoção em voz baixa: "Agora estou me sentindo…"</label>
+        <input type="text" id="s2_nomeacao" placeholder="Escreva aqui o que você disse para si mesmo(a)…" data-save>
+        <label class="label-sm" style="margin-top:18px;">Registro de intensidade (0 a 10) — anote a cada 5 minutos e observe a mudança</label>
+        <div class="tracker-grid">
+          <div class="tracker-cell"><div class="tc-lbl">Início</div><input type="number" id="s2_t0"  min="0" max="10" placeholder="—" data-save></div>
+          <div class="tracker-cell"><div class="tc-lbl">5 min</div><input type="number" id="s2_t5"  min="0" max="10" placeholder="—" data-save></div>
+          <div class="tracker-cell"><div class="tc-lbl">10 min</div><input type="number" id="s2_t10" min="0" max="10" placeholder="—" data-save></div>
+          <div class="tracker-cell"><div class="tc-lbl">15 min</div><input type="number" id="s2_t15" min="0" max="10" placeholder="—" data-save></div>
+          <div class="tracker-cell"><div class="tc-lbl">20 min</div><input type="number" id="s2_t20" min="0" max="10" placeholder="—" data-save></div>
+        </div>
+        <label class="label-sm">O que você percebeu ao observar a emoção sem bloqueá-la?</label>
+        <textarea id="s2_percepcao" placeholder="A emoção diminuiu? Ficou igual? Como foi a experiência?" data-save></textarea>
+      </div>
+    </div>
+
+    <!-- ── SEÇÃO 3 ── -->
+    <div class="section">
+      <div class="section-hd">
+        <div class="sec-num">3</div>
+        <h2>Agir em Oposição aos Impulsos Emocionais</h2>
+      </div>
+      <div class="section-bd">
+        <p class="body-text">Agir conforme o impulso de uma emoção forte geralmente <strong>intensifica</strong> o sentimento. A ação oposta sinaliza ao cérebro que a emoção pode ir embora.</p>
+        <table class="tbl">
+          <thead><tr><th>#</th><th>Passo</th><th>O que fazer</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl">1</td><td class="lbl">Reconhecer</td><td>Perceba e nomeie o que está sentindo.</td></tr>
+            <tr><td class="lbl">2</td><td class="lbl">Avaliar</td><td>Essa emoção está me fazendo mal? É proporcional?</td></tr>
+            <tr><td class="lbl">3</td><td class="lbl">Observar</td><td>Note seu comportamento atual: gritando? Fugindo?</td></tr>
+            <tr><td class="lbl">4</td><td class="lbl">Identificar</td><td>Qual seria a ação OPOSTA?</td></tr>
+            <tr><td class="lbl">5</td><td class="lbl">Comprometer</td><td>Pratique a nova atitude por um tempo determinado.</td></tr>
+            <tr><td class="lbl">6</td><td class="lbl">Monitorar</td><td>Observe como o sentimento vai mudando.</td></tr>
+          </tbody>
+        </table>
+        <table class="tbl amber" style="margin-bottom:20px;">
+          <thead><tr><th>Emoção / Impulso</th><th>Ação Oposta</th></tr></thead>
+          <tbody>
+            <tr><td class="lbl">Raiva → gritar, atacar</td><td>Falar suavemente; validar o outro</td></tr>
+            <tr><td class="lbl">Medo → evitar, fugir</td><td>Aproximar-se com cuidado</td></tr>
+            <tr><td class="lbl">Tristeza → isolar-se</td><td>Buscar alguém de confiança</td></tr>
+            <tr><td class="lbl">Vergonha → esconder-se</td><td>Agir com valores mesmo sem vontade</td></tr>
+          </tbody>
+        </table>
+        <hr class="div">
+        <label class="label-sm">1. Qual emoção você está sentindo?</label>
+        <input type="text" id="s3_emocao" data-save>
+        <label class="label-sm">2. Ela é proporcional? Está te fazendo mal?</label>
+        <textarea id="s3_avaliacao" rows="2" data-save></textarea>
+        <label class="label-sm">3. Qual é o impulso atual?</label>
+        <input type="text" id="s3_impulso" placeholder="Ex: quero gritar, quero sumir…" data-save>
+        <label class="label-sm">4. Qual seria a ação oposta?</label>
+        <input type="text" id="s3_oposta" placeholder="Ex: usar voz calma, ligar para alguém…" data-save>
+        <label class="label-sm">5. Por quanto tempo vai se comprometer com essa nova atitude?</label>
+        <input type="text" id="s3_compromisso" placeholder="Ex: pelos próximos 30 minutos…" data-save>
+        <label class="label-sm">6. Como o sentimento mudou depois?</label>
+        <textarea id="s3_resultado" rows="2" data-save></textarea>
+      </div>
+    </div>
+
+    <!-- ── SEÇÃO 4 ── -->
+    <div class="section">
+      <div class="section-hd amber">
+        <div class="sec-num amber">4</div>
+        <h2>Resolução de Problemas — Técnica ABC</h2>
+      </div>
+      <div class="section-bd">
+        <p class="body-text">Às vezes é possível lidar com a emoção <strong>antes</strong> de ela explodir, analisando o que desencadeou a crise.</p>
+        <div class="abc-stack">
+          <div class="abc-row"><div class="abc-letter">A</div><div class="abc-body"><strong>Alternativas</strong><p>Chuva de ideias: quais outras formas eu poderia reagir ao gatilho?</p></div></div>
+          <div class="abc-row"><div class="abc-letter">B</div><div class="abc-body"><strong>Boas ideias</strong><p>Das opções listadas, escolha 2 ou 3 que parecem mais realistas para você.</p></div></div>
+          <div class="abc-row"><div class="abc-letter">C</div><div class="abc-body"><strong>Comprometimento</strong><p>Decida exatamente onde e quando vai aplicar a nova reação.</p></div></div>
+        </div>
+        <label class="label-sm">Qual foi a situação gatilho?</label>
+        <textarea id="s4_gatilho" rows="2" placeholder="Descreva o que aconteceu antes da emoção surgir…" data-save></textarea>
+        <label class="label-sm">A — Alternativas (liste todas as formas possíveis de reagir)</label>
+        <textarea id="s4_alternativas" placeholder="1. …&#10;2. …&#10;3. …" data-save></textarea>
+        <label class="label-sm">B — Boas ideias (quais parecem mais realistas?)</label>
+        <textarea id="s4_boas" rows="2" data-save></textarea>
+        <label class="label-sm">C — Comprometimento: quando e onde vai aplicar?</label>
+        <input type="text" id="s4_compromisso" placeholder="Ex: na próxima conversa com X…" data-save>
+      </div>
+    </div>
+
+    <!-- ── SEÇÃO 5 ── -->
+    <div class="section">
+      <div class="section-hd">
+        <div class="sec-num">5</div>
+        <h2>O Regulador Semanal</h2>
+      </div>
+      <div class="section-bd">
+        <p class="body-text">Marque o que você praticou durante a semana. Pequenas ações diárias criam hábitos duradouros.</p>
+        <div class="weekly-scroll">
+          <table class="weekly-tbl">
+            <thead><tr><th>Hábito</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th><th>Dom</th></tr></thead>
+            <tbody id="weeklyBody"></tbody>
+          </table>
+        </div>
+        <label class="label-sm" style="margin-top:18px;">O que funcionou melhor esta semana?</label>
+        <textarea id="s5_funcionou" rows="2" data-save></textarea>
+        <label class="label-sm">O que foi mais difícil?</label>
+        <textarea id="s5_dificil" rows="2" data-save></textarea>
+      </div>
+    </div>
+
+    <!-- ── SEÇÃO 6 ── -->
+    <div class="section">
+      <div class="section-hd">
+        <div class="sec-num final">6</div>
+        <h2>Perguntas para Refletir</h2>
+      </div>
+      <div class="section-bd" id="questionsContainer"></div>
+    </div>
+
+    <!-- ── CÓDIGO + EXPORTAÇÃO ── -->
+    <div class="code-panel">
+      <h3>Finalizar e enviar ao terapeuta</h3>
+
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 15px;text-align:left;">
+          <div style="font-size:18px;margin-bottom:6px;">🔢</div>
+          <div style="color:#fff;font-size:12.5px;font-weight:600;margin-bottom:4px;">Código — só para você</div>
+          <div style="color:rgba(255,255,255,.65);font-size:12px;line-height:1.55;">Serve para retomar o preenchimento neste mesmo aparelho e navegador em outro momento. <strong style="color:rgba(255,255,255,.85);">O terapeuta não acessa pelo código.</strong></div>
+        </div>
+        <div style="flex:1;min-width:180px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 15px;text-align:left;">
+          <div style="font-size:18px;margin-bottom:6px;">📤</div>
+          <div style="color:#fff;font-size:12.5px;font-weight:600;margin-bottom:4px;">Para o terapeuta</div>
+          <div style="color:rgba(255,255,255,.65);font-size:12px;line-height:1.55;">Use <strong style="color:rgba(255,255,255,.85);">"Exportar .txt"</strong> ou <strong style="color:rgba(255,255,255,.85);">"Copiar respostas"</strong> e envie pelo canal que preferir (e-mail, mensagem, etc.).</div>
+        </div>
+      </div>
+
+      <div class="code-display">
+        <span class="code-num" id="codeDisplay">——————</span>
+        <div class="code-hint">Código de retomada — só neste aparelho</div>
+      </div>
+      <div class="code-actions">
+        <button class="c-btn white" onclick="copyCode()">📋 Copiar código</button>
+        <button class="c-btn white" onclick="exportTxt()">📄 Baixar .txt</button>
+        <button class="c-btn email" onclick="sendByEmail()">✉️ Tentar abrir e-mail</button>
+      </div>
+
+      <!-- Manual email fallback -->
+      <div style="margin-top:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:18px 16px;text-align:left;">
+        <p style="color:#fff;font-size:13px;font-weight:600;margin-bottom:8px;">📬 Se o botão de e-mail não abrir, envie manualmente:</p>
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border-radius:8px;padding:10px 13px;margin-bottom:12px;flex-wrap:wrap;">
+          <span style="color:rgba(255,255,255,.6);font-size:11.5px;">Endereço da terapeuta:</span>
+          <span style="color:#fff;font-size:13.5px;font-weight:700;letter-spacing:.02em;flex:1;">liviajc86@sou.unilavras.edu.br</span>
+          <button onclick="copyEmail()" style="padding:6px 12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:6px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--ff-body);white-space:nowrap;">Copiar endereço</button>
+        </div>
+        <p style="color:rgba(255,255,255,.6);font-size:12px;line-height:1.65;margin-bottom:10px;">
+          1. Clique em <strong style="color:rgba(255,255,255,.85);">"Copiar respostas"</strong> abaixo<br>
+          2. Abra seu aplicativo de e-mail (Gmail, Outlook, etc.)<br>
+          3. Cole as respostas no corpo da mensagem<br>
+          4. Envie para o endereço acima
+        </p>
+        <button class="c-btn white" onclick="copyAllText()" style="width:100%;justify-content:center;">📝 Copiar respostas</button>
+      </div>
+    </div>
+
+    <!-- ── CLOSING ── -->
+    <div class="closing">
+      <h3>Uma palavra para você</h3>
+      <p>Lidar com emoções intensas é uma habilidade que se aprende com prática e paciência. Não existe perfeição nesse processo — cada pequeno passo já é uma vitória.</p>
+      <p class="quote">"As emoções são como ondas: você não pode impedi-las de chegar,<br>mas pode aprender a surfá-las."</p>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<div id="toast">✓ Salvo!</div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ── Constants ──────────────────────────────────── */
+const STORE_KEY = 'emocoes_v2_data';
+
+const HABITS = [
+  'Cuidei do meu sono',
+  'Me alimentei com cuidado',
+  'Nomeei minhas emoções',
+  'Usei a metáfora da onda',
+  'Pratiquei a ação oposta',
+  'Usei a Técnica ABC',
+  'Busquei apoio quando precisei',
+];
+const DAYS = ['seg','ter','qua','qui','sex','sab','dom'];
+const DAY_LABELS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+
+const QUESTIONS = [
+  'Qual emoção aparece com mais frequência para você? Onde você a sente no corpo?',
+  'Quando essa emoção chega, o que você costuma fazer? Isso te ajuda ou te prejudica?',
+  'Se a emoção fosse uma onda, como você a descreveria hoje (pequena, grande, intensa)?',
+  'Qual das habilidades deste material parece mais fácil de praticar? E a mais difícil?',
+  'Existe alguém de confiança com quem você pode conversar quando as emoções ficam intensas demais?',
+];
+
+const FIELD_LABELS = {
+  s1_emocao: 'Emoção sentida',
+  s1_corpo: 'Onde no corpo',
+  s1_pensamento: 'Pensamento de julgamento',
+  s1_observacao: 'Observação ao deixar passar',
+  s2_nomeacao: 'Nomeação da emoção',
+  s2_t0: 'Intensidade início',
+  s2_t5: 'Intensidade 5 min',
+  s2_t10: 'Intensidade 10 min',
+  s2_t15: 'Intensidade 15 min',
+  s2_t20: 'Intensidade 20 min',
+  s2_percepcao: 'Percepção após exposição',
+  s3_emocao: 'Emoção (ação oposta)',
+  s3_avaliacao: 'Avaliação da emoção',
+  s3_impulso: 'Impulso atual',
+  s3_oposta: 'Ação oposta escolhida',
+  s3_compromisso: 'Comprometimento',
+  s3_resultado: 'Resultado após ação oposta',
+  s4_gatilho: 'Situação gatilho',
+  s4_alternativas: 'Alternativas (A)',
+  s4_boas: 'Boas ideias (B)',
+  s4_compromisso: 'Comprometimento (C)',
+  s5_funcionou: 'O que funcionou esta semana',
+  s5_dificil: 'O que foi mais difícil',
+};
+
+/* ── Build dynamic UI ───────────────────────────── */
+function buildWeekly() {
+  const tbody = document.getElementById('weeklyBody');
+  HABITS.forEach((h, hi) => {
+    const tr = document.createElement('tr');
+    const cells = DAYS.map(d =>
+      `<td><input type="checkbox" class="wchk" id="w_${hi}_${d}" data-weekly="${hi}_${d}"></td>`
+    ).join('');
+    tr.innerHTML = `<td>${h}</td>${cells}`;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildQuestions() {
+  const c = document.getElementById('questionsContainer');
+  QUESTIONS.forEach((q, i) => {
+    const n = i + 1;
+    c.insertAdjacentHTML('beforeend', `
+      <div style="margin-bottom:20px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--c-teal);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${n}</div>
+          <span style="font-size:14px;font-weight:600;color:var(--c-teal-d);line-height:1.5;">${q}</span>
+        </div>
+        <textarea id="q_${n}" data-save placeholder="Sua resposta…"></textarea>
+      </div>
+    `);
+  });
+}
+
+/* ── Storage helpers ────────────────────────────── */
+function loadStore() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveStore(data) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+}
+
+/* ── Hash → 6-digit code ────────────────────────── */
+function computeCode(data) {
+  // Deterministic: hash the JSON of text fields (ignore timestamps)
+  const textFields = {};
+  document.querySelectorAll('[data-save]').forEach(el => {
+    const v = (el.value || '').trim();
+    if (v) textFields[el.id] = v;
+  });
+  const weekly = {};
+  document.querySelectorAll('[data-weekly]').forEach(el => {
+    if (el.checked) weekly[el.dataset.weekly] = true;
+  });
+  const str = JSON.stringify(textFields) + JSON.stringify(weekly);
+  // Simple djb2 hash
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+    hash = hash & 0x7fffffff; // keep positive 32-bit
+  }
+  const code = (hash % 1000000).toString().padStart(6, '0');
+  return code;
+}
+
+/* ── Save all ───────────────────────────────────── */
+let saveTimer = null;
+function scheduleAutoSave() {
+  const dot = document.getElementById('saveDot');
+  const lbl = document.getElementById('saveLabel');
+  if (dot) { dot.classList.add('saving'); lbl.textContent = 'Salvando…'; }
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(performSave, 900);
+}
+
+function performSave(silent) {
+  const store = loadStore();
+  const fields = {};
+  document.querySelectorAll('[data-save]').forEach(el => { fields[el.id] = el.value; });
+  const weekly = {};
+  document.querySelectorAll('[data-weekly]').forEach(el => { weekly[el.dataset.weekly] = el.checked; });
+  store.fields = fields;
+  store.weekly = weekly;
+  store.savedAt = Date.now();
+  saveStore(store);
+
+  // Update code
+  const code = computeCode();
+  store.code = code;
+  saveStore(store);
+  const cd = document.getElementById('codeDisplay');
+  if (cd) cd.textContent = code;
+
+  // Update progress
+  updateProgress(fields);
+
+  // UI feedback
+  const dot = document.getElementById('saveDot');
+  const lbl = document.getElementById('saveLabel');
+  if (dot) { dot.classList.remove('saving'); lbl.textContent = 'Salvo ✓'; }
+  if (!silent) showToast('✓ Resposta salva automaticamente');
+}
+
+function updateProgress(fields) {
+  const all = document.querySelectorAll('[data-save]');
+  const filled = [...all].filter(el => el.value && el.value.trim().length > 0).length;
+  const pct = Math.round((filled / all.length) * 100);
+  const fill = document.getElementById('progressFill');
+  const pctEl = document.getElementById('progressPct');
+  if (fill) fill.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '% preenchido';
+}
+
+/* ── Load all ───────────────────────────────────── */
+function loadAll() {
+  const store = loadStore();
+  if (store.fields) {
+    Object.entries(store.fields).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+  }
+  if (store.weekly) {
+    Object.entries(store.weekly).forEach(([key, val]) => {
+      const el = document.querySelector(`[data-weekly="${key}"]`);
+      if (el) el.checked = val;
+    });
+  }
+  if (store.code) {
+    const cd = document.getElementById('codeDisplay');
+    if (cd) cd.textContent = store.code;
+  }
+  updateProgress(store.fields || {});
+}
+
+/* ── Welcome / Enter ────────────────────────────── */
+function enterApp() {
+  document.getElementById('welcome').style.display = 'none';
+  const app = document.getElementById('app');
+  app.classList.add('visible');
+  loadAll();
+  attachListeners();
+}
+
+function attachListeners() {
+  document.querySelectorAll('[data-save]').forEach(el => {
+    el.addEventListener('input', scheduleAutoSave);
+  });
+  document.addEventListener('change', e => {
+    if (e.target.dataset.weekly !== undefined) scheduleAutoSave();
+  });
+}
+
+/* ── Recovery ───────────────────────────────────── */
+function tryRecover() {
+  const input = document.getElementById('recoveryInput').value.trim();
+  const msg = document.getElementById('recoveryMsg');
+  if (!/^\d{6}$/.test(input)) {
+    msg.className = 'w-recovery-msg err';
+    msg.textContent = '⚠️ Digite exatamente 6 dígitos.';
+    return;
+  }
+  const store = loadStore();
+  if (store.code === input) {
+    msg.className = 'w-recovery-msg ok';
+    msg.textContent = '✓ Dados encontrados! Clique em "Vamos começar" para continuar.';
+  } else {
+    msg.className = 'w-recovery-msg err';
+    msg.textContent = '✗ Código não encontrado neste dispositivo. Lembre: os dados só existem no aparelho onde foram preenchidos.';
+  }
+}
+
+/* ── Export / Share ─────────────────────────────── */
+function buildTextExport() {
+  const store = loadStore();
+  const fields = store.fields || {};
+  const weekly = store.weekly || {};
+  const code = store.code || '------';
+  const date = store.savedAt ? new Date(store.savedAt).toLocaleDateString('pt-BR') : '—';
+
+  let txt = `EMOÇÕES INTENSAS — RESPOSTAS DO PACIENTE\n`;
+  txt += `Código: ${code}  |  Salvo em: ${date}\n`;
+  txt += `${'─'.repeat(48)}\n\n`;
+
+  // Sections
+  const sections = [
+    { title: 'SEÇÃO 1 — Consciência das Emoções',
+      ids: ['s1_emocao','s1_corpo','s1_pensamento','s1_observacao'] },
+    { title: 'SEÇÃO 2 — Exposição Emocional',
+      ids: ['s2_nomeacao','s2_t0','s2_t5','s2_t10','s2_t15','s2_t20','s2_percepcao'] },
+    { title: 'SEÇÃO 3 — Ação Oposta',
+      ids: ['s3_emocao','s3_avaliacao','s3_impulso','s3_oposta','s3_compromisso','s3_resultado'] },
+    { title: 'SEÇÃO 4 — Técnica ABC',
+      ids: ['s4_gatilho','s4_alternativas','s4_boas','s4_compromisso'] },
+    { title: 'SEÇÃO 5 — Regulador Semanal',
+      ids: ['s5_funcionou','s5_dificil'] },
+  ];
+
+  sections.forEach(sec => {
+    txt += `${sec.title}\n${'─'.repeat(36)}\n`;
+    sec.ids.forEach(id => {
+      const label = FIELD_LABELS[id] || id;
+      const val = (fields[id] || '').trim() || '(não preenchido)';
+      txt += `${label}:\n${val}\n\n`;
+    });
+  });
+
+  // Questions
+  txt += `SEÇÃO 6 — Perguntas Reflexivas\n${'─'.repeat(36)}\n`;
+  QUESTIONS.forEach((q, i) => {
+    const id = `q_${i+1}`;
+    const val = (fields[id] || '').trim() || '(não preenchido)';
+    txt += `${i+1}. ${q}\n${val}\n\n`;
+  });
+
+  // Weekly
+  txt += `REGULADOR SEMANAL (checklist)\n${'─'.repeat(36)}\n`;
+  HABITS.forEach((h, hi) => {
+    const days_done = DAYS.filter(d => weekly[`${hi}_${d}`]).map(d => DAY_LABELS[DAYS.indexOf(d)]);
+    txt += `${h}: ${days_done.length ? days_done.join(', ') : 'nenhum dia'}\n`;
+  });
+
+  return txt;
+}
+
+function exportTxt() {
+  const txt = buildTextExport();
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'emocoes_intensas_respostas.txt'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('📄 Arquivo baixado!');
+}
+
+function copyAllText() {
+  const txt = buildTextExport();
+  navigator.clipboard.writeText(txt).then(() => {
+    showToast('📝 Respostas copiadas!');
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = txt; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('📝 Respostas copiadas!');
+  });
+}
+
+function copyCode() {
+  const code = document.getElementById('codeDisplay').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    showToast('📋 Código copiado: ' + code);
+  }).catch(() => showToast('Código: ' + code));
+}
+
+
+/* ── Email ──────────────────────────────────────── */
+function copyEmail() {
+  const addr = 'liviajc86@sou.unilavras.edu.br';
+  navigator.clipboard.writeText(addr).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = addr; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  });
+  showToast('📋 Endereço copiado!');
+}
+
+function sendByEmail() {
+  const store = loadStore();
+  const code = store.code || '------';
+  const date = store.savedAt ? new Date(store.savedAt).toLocaleDateString('pt-BR') : '—';
+  const txt = buildTextExport();
+
+  const to = 'liviajc86@sou.unilavras.edu.br';
+  const subject = encodeURIComponent('Respostas — Emoções Intensas | Código: ' + code);
+  const body = encodeURIComponent(txt);
+
+  const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+
+  // mailto has ~2000 char limit on some clients; warn if very long
+  const link = document.createElement('a');
+  link.href = mailto;
+  link.click();
+
+  showToast('✉️ Abrindo seu app de e-mail…');
+}
+
+/* ── Toast ──────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg || '✓ Salvo!';
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── Init ───────────────────────────────────────── */
+buildWeekly();
+buildQuestions();
+</script>
+</body>
+</html>
